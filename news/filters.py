@@ -3,7 +3,7 @@ from .models import Post, Category
 
 
 class NewsFilter(FilterSet):
-    category = filters.ModelChoiceFilter(queryset=Category.objects.all(), label='Категория')
+    category = filters.ModelMultipleChoiceFilter(queryset=Category.objects.all(), label='Категория')
     date = filters.DateFromToRangeFilter(widget=widgets.DateRangeWidget(attrs={'type': 'date'}), label='Дата')
     title = filters.CharFilter(field_name='title', lookup_expr='icontains', label='Заголовок')
 
