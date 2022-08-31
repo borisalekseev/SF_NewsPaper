@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
-TYPE_CHOICES = (('article', "статья"), ('new', "новость"))
+TYPE_CHOICES = (('article', "Статья"), ('new', "Новость"))
 
 
 class Author(models.Model):
@@ -23,8 +24,8 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING)
-    type = models.CharField(max_length=45, choices=TYPE_CHOICES, default='статья')
+    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, default=Author.objects.all()[0])
+    type = models.CharField(max_length=45, choices=TYPE_CHOICES)
     date = models.DateTimeField(auto_now=True)
     category = models.ManyToManyField(Category)
     title = models.CharField(max_length=255)
@@ -41,6 +42,12 @@ class Post(models.Model):
 
     def preview(self):
         return self.text[:124] + '...'
+
+    def get_absolute_url(self):
+        if self.type == "Новость":
+            return f"http://127.0.0.1:8000/news/{self.id}"
+        elif self.type == "Статья":
+            return f"http://127.0.0.1:8000/articles/{self.id}"
 
     def __str__(self):
         return Post.preview(self)

@@ -10,8 +10,9 @@ News
 
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
-<h1>Новости</h1>
-<h3>Всего новостей: {{ news|length }}</h3>
+<h1>{{ news|get_category }}</h1>
+<h3>На странице: {{ news|length }} Всего: {{ paginator.object_list|length }}</h3>
+    <h6><a href="create/">Создать</a></h6>
 <table>
     <tr>
         <td>Заголовок</td><td>Дата публикации</td>
@@ -19,11 +20,12 @@ News
     </tr>
     {% for new in news %}
     <tr>
-        <td>{{ new.title|censor }}</td><td>{{ new.date|date:'d.m.Y' }}</td>
+        <td><a href="{{ new.pk }}">{{ new.title|censor }}</a></td><td>{{ new.date|date:'d.m.Y' }}</td>
         <td>{{ new.text|truncatewords:20|censor }}</td>
     </tr>
     {% endfor %}
 </table>
+    <div>
     {% if page_obj.has_previous %}
         <a href="?{% url_replace page=1 %}">1</a>
         {% if page_obj.previous_page_number != 1 %}
@@ -38,10 +40,10 @@ News
         <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
         {% if page_obj.next_page_number != paginator.num_pages %}
             ...
-            <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
         {% endif %}
     {% endif %}
-
+    </div>
     <div>Справочно: имеющиеся id новостей в бд:
     {% for new in news %}
         {{ new.id }}
