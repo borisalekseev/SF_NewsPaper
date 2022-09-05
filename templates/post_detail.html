@@ -10,7 +10,11 @@ New
 <!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
 {% block content %}
 <h1>{{ post.title|censor }}</h1>
-    <h3>Автор: {{ post.author.user.username }}</h3>
+    <h3>Автор: {{ post.author.user.username }}
+        {% if post.author.user.first_name %}
+        ({{ post.author.user.first_name }} {{ post.author.user.last_name }})
+        {% endif %}
+    </h3>
     <h3>Дата публикации: {{ post.date|date:'d.m.Y' }}</h3>
     <h3>{{ post.type }}</h3>
     <h2>{{ post.text|censor }}</h2>

@@ -10,9 +10,14 @@ News
 
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
+{% if news %}
 <h1>{{ news|get_category }}</h1>
+{% endif %}
 <h3>На странице: {{ news|length }} Всего: {{ paginator.object_list|length }}</h3>
     <h6><a href="create/">Создать</a></h6>
+    {% if is_not_author %}
+        <h6><a href="/news/author">Стать автором</a></h6>
+    {% endif %}
 <table>
     <tr>
         <td>Заголовок</td><td>Дата публикации</td>

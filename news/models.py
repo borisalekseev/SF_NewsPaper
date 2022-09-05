@@ -24,7 +24,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, default=Author.objects.all()[0])
+    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING)
     type = models.CharField(max_length=45, choices=TYPE_CHOICES)
     date = models.DateTimeField(auto_now=True)
     category = models.ManyToManyField(Category)

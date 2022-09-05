@@ -24,11 +24,21 @@
                <div class="collapse navbar-collapse" id="navbarResponsive">
                    <ul class="navbar-nav ml-auto">
                        <li class="nav-item">
-                           <a class="nav-link" href="http://127.0.0.1:8000/news/">Новости</a>
+                           <a class="nav-link" href="/news/">Новости</a>
                        </li>
                        <li class="nav-item">
-                           <a class="nav-link" href="http://127.0.0.1:8000/articles/">Статьи</a>
+                           <a class="nav-link" href="/articles/">Статьи</a>
                        </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/news/search/">Поиск новостей</a>
+                       </li>
+                       {% if request.user.is_authenticated %}
+                           <li>
+                               <a class="nav-link" href="/accounts/logout/">{{ request.user.first_name }} (выйти)</a>
+                           </li>
+                       {% else %}
+                           <span><a class="nav-link" href="/accounts/login">Войти</a></span>
+                       {% endif %}
                    </ul>
                </div>
            </div>
